@@ -1,5 +1,4 @@
-serbus
-======
+#serbus
 
 Copyright (c) 2015 - Gray Cat Labs - https://graycat.io
 
@@ -7,13 +6,11 @@ This repository includes basic C APIs for the I2C and SPI serial bus protocols o
 
 It's simply a wrapper for the ioctl commands provided by the standard Linux I2C and SPI drivers, so it should be pretty universal. That said, I've currently only tested it on the BeagleBone Black, so use it at your own risk! (And let me know if it's working for you on another system)
 
-Contributing
-============
+##Contributing
 
 Have something to contribute? Great! This project follows the Contributor Covenant Code of Conduct, so be sure to read `code_of_conduct.md`.
 
-License
-=======
+##License
 
 Released under the MIT license.
 

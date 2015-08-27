@@ -1,0 +1,5 @@
+*.pyo
+*.pyc
+build/
+dist/
+pyserbus.egg-info/

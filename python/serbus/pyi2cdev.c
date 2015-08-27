@@ -126,7 +126,7 @@ static PyObject *I2CDev_read(I2CDev *self, PyObject *args, PyObject *kwds) {
   }
 
   if (self->slave_addr != addr) {
-    if (setSlaveAddress(self->i2c_fd, addr) < 0) {
+    if (I2C_setSlaveAddress(self->i2c_fd, addr) < 0) {
       PyErr_SetString(PyExc_IOError, "could not configure I2C interface");
       return NULL;
     }
@@ -165,7 +165,7 @@ static PyObject *I2CDev_readTransaction(I2CDev *self, PyObject *args,
   }
 
   if (self->slave_addr != addr) {
-    if (setSlaveAddress(self->i2c_fd, addr) < 0) {
+    if (I2C_setSlaveAddress(self->i2c_fd, addr) < 0) {
       PyErr_SetString(PyExc_IOError, "could not configure I2C interface");
       return NULL;
     }
@@ -209,7 +209,7 @@ static PyObject *I2CDev_write(I2CDev *self, PyObject *args, PyObject *kwds) {
   }
 
   if (self->slave_addr != addr) {
-    if (setSlaveAddress(self->i2c_fd, addr) < 0) {
+    if (I2C_setSlaveAddress(self->i2c_fd, addr) < 0) {
       PyErr_SetString(PyExc_IOError, "could not configure I2C interface");
       return NULL;
     }

@@ -71,7 +71,7 @@ int I2C_disable10BitAddressing(int i2c_fd);
  * @param rx_buffer pointer to an array, already initialized to the required size
  * @return Returns 0 if successful, ioctl error code otherwise
  */
-int setSlaveAddress(int i2c_fd, int addr);
+int I2C_setSlaveAddress(int i2c_fd, int addr);
 
 /**
  * @brief Reads a block from the given I2C interface.

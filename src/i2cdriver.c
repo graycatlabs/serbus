@@ -56,7 +56,7 @@ int I2C_disable10BitAddressing(int i2c_fd) {
   return 0;
 }
 
-int setSlaveAddress(int i2c_fd, int addr) {
+int I2C_setSlaveAddress(int i2c_fd, int addr) {
   int ret;
   ret = ioctl(i2c_fd, I2C_SLAVE, addr);
   if (ret < 0) return ret;

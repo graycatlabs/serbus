@@ -13,7 +13,7 @@ extensions = [
   ]
 
 setup(name="pyserbus",
-      version="1.0",
+      version="1.0.1",
       description="A Python package for I2C and SPI serial bus communication on GNU/Linux systems.",
       long_description=open("README.md").read(),
       author="Alexander Hiam",

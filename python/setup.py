@@ -12,15 +12,15 @@ extensions = [
             include_dirs=["include"]),
   ]
 
-setup(name="pyserbus",
-      version="1.0",
+setup(name="serbus",
+      version="1.0.1",
       description="A Python package for I2C and SPI serial bus communication on GNU/Linux systems.",
       long_description=open("README.md").read(),
       author="Alexander Hiam",
       author_email="alex@graycat.io",
       license="MIT License",
       url="https://github.com/graycatlabs/serbus",
-      download_url="",
+      download_url="https://github.com/graycatlabs/serbus/tarball/v1.0.1",
       keywords=["I2C", "SPI", "serial", "Linux"],
       packages=["serbus"],
       ext_modules=extensions, 

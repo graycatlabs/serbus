@@ -55,7 +55,7 @@ int SPI_read(int spidev_fd, void *rx_buffer, int n_words) {
   if (n_bytes > MAX_TRANSFER_SIZE) n_bytes = MAX_TRANSFER_SIZE;
 
   transfer.tx_buf = 0;
-  transfer.rx_buf = (uint64_t*) rx_buffer;
+  transfer.rx_buf = (uintptr_t) rx_buffer;
   transfer.len = n_bytes;
   transfer.speed_hz = 0;
   transfer.delay_usecs = 0;
@@ -75,7 +75,7 @@ int SPI_write(int spidev_fd, void *tx_buffer, int n_words) {
   if (!n_bytes) return 0;
   if (n_bytes > MAX_TRANSFER_SIZE) n_bytes = MAX_TRANSFER_SIZE;
 
-  transfer.tx_buf = (uint64_t*) tx_buffer;
+  transfer.tx_buf = (uintptr_t) tx_buffer;
   transfer.rx_buf = 0;
   transfer.len = n_bytes;
   transfer.speed_hz = 0;
@@ -96,8 +96,8 @@ int SPI_transfer(int spidev_fd, void *tx_buffer, void *rx_buffer, int n_words) {
   if (!n_bytes) return 0;
   if (n_bytes > MAX_TRANSFER_SIZE) n_bytes = MAX_TRANSFER_SIZE;
 
-  transfer.tx_buf = (uint64_t*) tx_buffer;
-  transfer.rx_buf = (uint64_t*) rx_buffer;
+  transfer.tx_buf = (uintptr_t) tx_buffer;
+  transfer.rx_buf = (uintptr_t) rx_buffer;
   transfer.len = n_bytes;
   transfer.speed_hz = 0;
   transfer.delay_usecs = 0;

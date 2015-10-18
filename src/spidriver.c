@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <string.h>
 #include <sys/ioctl.h>
 #include <linux/types.h>
 #include <linux/spi/spidev.h>
@@ -54,6 +55,7 @@ int SPI_read(int spidev_fd, void *rx_buffer, int n_words) {
   if (!n_bytes) return 0;
   if (n_bytes > MAX_TRANSFER_SIZE) n_bytes = MAX_TRANSFER_SIZE;
 
+  memset((void *) &transfer, 0, sizeof(struct spi_ioc_transfer));
   transfer.tx_buf = 0;
   transfer.rx_buf = (uintptr_t) rx_buffer;
   transfer.len = n_bytes;
@@ -75,6 +77,7 @@ int SPI_write(int spidev_fd, void *tx_buffer, int n_words) {
   if (!n_bytes) return 0;
   if (n_bytes > MAX_TRANSFER_SIZE) n_bytes = MAX_TRANSFER_SIZE;
 
+  memset((void *) &transfer, 0, sizeof(struct spi_ioc_transfer));
   transfer.tx_buf = (uintptr_t) tx_buffer;
   transfer.rx_buf = 0;
   transfer.len = n_bytes;
@@ -96,6 +99,7 @@ int SPI_transfer(int spidev_fd, void *tx_buffer, void *rx_buffer, int n_words) {
   if (!n_bytes) return 0;
   if (n_bytes > MAX_TRANSFER_SIZE) n_bytes = MAX_TRANSFER_SIZE;
 
+  memset((void *) &transfer, 0, sizeof(struct spi_ioc_transfer));
   transfer.tx_buf = (uintptr_t) tx_buffer;
   transfer.rx_buf = (uintptr_t) rx_buffer;
   transfer.len = n_bytes;

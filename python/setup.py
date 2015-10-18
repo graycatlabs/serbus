@@ -13,14 +13,14 @@ extensions = [
   ]
 
 setup(name="serbus",
-      version="1.0.1",
+      version="1.0.2",
       description="A Python package for I2C and SPI serial bus communication on GNU/Linux systems.",
       long_description=open("README.md").read(),
       author="Alexander Hiam",
       author_email="alex@graycat.io",
       license="MIT License",
       url="https://github.com/graycatlabs/serbus",
-      download_url="https://github.com/graycatlabs/serbus/tarball/v1.0.1",
+      download_url="https://github.com/graycatlabs/serbus/tarball/v1.0.2",
       keywords=["I2C", "SPI", "serial", "Linux"],
       packages=["serbus"],
       ext_modules=extensions, 

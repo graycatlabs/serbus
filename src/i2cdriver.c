@@ -1,5 +1,4 @@
- /* i2cdriver.c
- *
+/*******************************************************************************
  * Copyright (c) 2015 - Gray Cat Labs - https://graycat.io
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -19,6 +18,17 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
+ ******************************************************************************/
+
+/**
+ * @file i2cdriver.c
+ * @author Alex Hiam - <alex@graycat.io>
+ *
+ * @brief A basic driver for controlling Linux I2C interfaces.
+ * 
+ * Requires an I2C Kernel driver be loaded to expose /dev/i2c-N interfaces 
+ * which provide the standard Linux I2C ioctls. This driver is really just an 
+ * ioctl wrapper.
  */
 
 #include <stdint.h>
@@ -30,7 +40,8 @@
 #include <linux/i2c-dev.h>
 #include "i2cdriver.h"
 
-#define I2C_PATH_LEN   20 // > "/dev/i2c-N"
+/// Buffer size at least large enough to fit the max length of "/dev/i2c-N"
+#define I2C_PATH_LEN   20 
 
 int I2C_open(uint8_t bus) {
   char device[I2C_PATH_LEN];

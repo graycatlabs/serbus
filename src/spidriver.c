@@ -1,5 +1,4 @@
-/* spidriver.c
- *
+/*******************************************************************************
  * Copyright (c) 2015 - Gray Cat Labs - https://graycat.io
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -19,6 +18,17 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
+ ******************************************************************************/
+
+/**
+ * @file spidriver.c
+ * @author Alex Hiam - <alex@graycat.io>
+ *
+ * @brief A basic driver for controlling Linux spidev interfaces.
+ * 
+ * Requires an SPI Kernel driver be loaded to expose /dev/spidevX.Y interfaces 
+ * which provide the standard Linux SPI ioctls. This driver is really just an 
+ * ioctl wrapper.
  */
 
 #include <stdint.h>
@@ -31,8 +41,10 @@
 #include <linux/spi/spidev.h>
 #include "spidriver.h"
 
-#define SPIDEV_PATH_LEN 20 // > "/dev/spidev255.255"
-#define MAX_TRANSFER_SIZE 4096 // standard page size
+/// Buffer size at least large enough to fit the max length of "/dev/spidevX.Y"
+#define SPIDEV_PATH_LEN 20
+ /// Maximum transfer size set to standard page size of 4096 bytes
+#define MAX_TRANSFER_SIZE 4096
 
 int SPI_open(uint8_t bus, uint8_t cs) {
   char device[SPIDEV_PATH_LEN];

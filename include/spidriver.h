@@ -172,7 +172,7 @@ int SPI_setClockMode(int spidev_fd, uint8_t clock_mode);
  *
  * @param spidev_fd spidev file descriptor
  *
- * @return Returns Returns the clock mode, or -1 if error
+ * @return Returns  the clock mode, or -1 if error
  */
 int SPI_getClockMode(int spidev_fd);
 

@@ -50,6 +50,12 @@ static void I2CDev_dealloc(I2CDev *self) {
   self->ob_type->tp_free((PyObject*)self);
 }
 
+PyDoc_STRVAR(I2CDev_init__doc__,
+  "I2CDev(bus)\n"
+  "\n"
+  ":param bus: The bus number to use, e.g. 0 for /dev/i2c-0\n"
+  ":type bus: int\n"
+  );
 static PyObject *I2CDev_init(I2CDev *self, PyObject *args, PyObject *kwds) {
   uint8_t bus;
   if(!PyArg_ParseTuple(args, "b", &bus)) {
@@ -63,10 +69,15 @@ static PyObject *I2CDev_init(I2CDev *self, PyObject *args, PyObject *kwds) {
 }
 
 PyDoc_STRVAR(I2CDev_open__doc__,
-  "I2CDev.open(use_10bit_address=False) -> None\n\n"
-  "Initialize the I2C bus interface.\n"
-  "If use_10bit_address=True the bus will use 10-bit slave addresses\n"
-  "instead of 7-bit addresses.\n");
+  "I2CDev.open([use_10bit_address=False])\n"
+  "\n"
+  ":param use_10bit_address: `True` for 10-bit address mode, `False` for\n"
+  "                          7-bit address mode (default)\n"
+  ":type use_10bit_address: bool, optional\n"
+  "\n"
+  "Initialize the I2C bus interface, selecting whether the bus will use 10-bit\n"
+  "slave addresses or the standard 7-bit addresses.\n"
+  );
 static PyObject *I2CDev_open(I2CDev *self, PyObject *args, PyObject *kwds) {
   uint8_t use_10bit_address;
   static char *kwlist[] = {"use_10bit_address", NULL};
@@ -103,9 +114,10 @@ static PyObject *I2CDev_open(I2CDev *self, PyObject *args, PyObject *kwds) {
 }
 
 PyDoc_STRVAR(I2CDev_close__doc__,
-  "I2CDev.close() -> None\n\n"
-  "Close the I2C bus interface.\n");
-
+  "I2CDev.close()\n"
+  "\n"
+  "Close the I2C bus interface.\n"
+  );\
 static PyObject *I2CDev_close(I2CDev *self, PyObject *args, PyObject *kwds) {
   if (self->i2c_fd > 0) I2C_close(self->i2c_fd);
   Py_INCREF(Py_None);
@@ -114,9 +126,18 @@ static PyObject *I2CDev_close(I2CDev *self, PyObject *args, PyObject *kwds) {
 
 
 PyDoc_STRVAR(I2CDev_read__doc__,
-  "I2CDev.read(slave_addr, n_bytes) -> list\n\n"
-  "Reads n_bytes words from the I2C slave device with the given address\n"
-  "and returns them as a list.\n");
+  "I2CDev.read(slave_addr, n_bytes)\n"
+  "\n"
+  ":param slave_addr: The address of the slave to read from\n"
+  ":type slave_addr: int\n"
+  ":param n_bytes: The number of bytes to read\n"
+  ":type n_bytes: int\n"
+  "\n"
+  ":return: A list of ints of the bytes read\n"
+  "\n"
+  "Reads and returns n_bytes words from the I2C slave device with the given\n"
+  "address.\n"
+  );
 static PyObject *I2CDev_read(I2CDev *self, PyObject *args, PyObject *kwds) {
   uint32_t n_bytes, i, addr;
   PyObject *data, *byte_obj;
@@ -151,9 +172,21 @@ static PyObject *I2CDev_read(I2CDev *self, PyObject *args, PyObject *kwds) {
 }
 
 PyDoc_STRVAR(I2CDev_readTransaction__doc__,
-  "I2CDev.readTransaction(slave_addr, tx_byte, n_bytes) -> list\n\n"
-  "Writes tx_byte then immediately reads n_bytes words from the I2C slave\n"
-  "device with the given address and returns them as a list.\n");
+  "I2CDev.readTransaction(slave_addr, tx_byte, n_bytes)\n"
+  "\n"
+  ":param slave_addr: The address of the slave to read from\n"
+  ":type slave_addr: int\n"
+  ":param tx_byte: The byte to write before reading\n"
+  ":type tx_byte: int\n"
+  ":param n_bytes: The number of bytes to read\n"
+  ":type n_bytes: int\n"
+  "\n"
+  ":return: A list of ints of the bytes read\n"
+  "\n"
+  "Writes `tx_byte` then immediately reads `n_bytes` bytes from the I2C slave\n"
+  "device with the given address and returns them as a list. This is useful\n"
+  "for things like reading register values from memory mapped devices.\n"
+  );
 static PyObject *I2CDev_readTransaction(I2CDev *self, PyObject *args, 
                                         PyObject *kwds) {
   uint32_t n_bytes, i, addr;
@@ -196,9 +229,16 @@ static PyObject *I2CDev_readTransaction(I2CDev *self, PyObject *args,
 }
 
 PyDoc_STRVAR(I2CDev_write__doc__,
-  "I2CDev.write(slave_addr, [bytes]) -> None\n\n"
+  "I2CDev.write(slave_addr, bytes)\n"
+  "\n"
+  ":param slave_addr: The address of the slave to write to\n"
+  ":type slave_addr: int\n"
+  ":param n_bytes: A list of bytes to write\n"
+  ":type n_bytes: list\n"
+  "\n"
   "Writes the given list of bytes to the I2C slave device with the\n"
-  "given address. Only integers in the range [0,255] are valid.\n");
+  "given address.\n"
+  );
 static PyObject *I2CDev_write(I2CDev *self, PyObject *args, PyObject *kwds) {
   uint32_t n_bytes, i, addr;
   long byte;
@@ -292,9 +332,9 @@ static int I2CDev_set_bus_num(I2CDev *self, PyObject *value, void *closure) {
 
 static PyGetSetDef I2CDev_getseters[] = {
   {"i2c_fd", (getter)I2CDev_get_i2c_fd, (setter)I2CDev_set_i2c_fd, 
-   "I2C device file descriptor", NULL},
+   NULL, NULL},
   {"bus_num", (getter)I2CDev_get_bus_num, (setter)I2CDev_set_bus_num, 
-   "I2C bus number", NULL},
+   NULL, NULL},
   {NULL}
 };
 
@@ -336,7 +376,7 @@ static PyTypeObject I2CDev_type = {
   0,                                        /*tp_setattro*/
   0,                                        /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE, /*tp_flags*/
-  "I2CDev object",                          /* tp_doc */
+  I2CDev_init__doc__,                       /* tp_doc */
   0,                                        /* tp_traverse */
   0,                                        /* tp_clear */
   0,                                        /* tp_richcompare */

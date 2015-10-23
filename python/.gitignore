@@ -2,4 +2,4 @@
 *.pyc
 build/
 dist/
-pyserbus.egg-info/
+serbus.egg-info/

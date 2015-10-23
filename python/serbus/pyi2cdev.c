@@ -53,7 +53,7 @@ static void I2CDev_dealloc(I2CDev *self) {
 PyDoc_STRVAR(I2CDev_init__doc__,
   "I2CDev(bus)\n"
   "\n"
-  ":param bus: The bus number to use, e.g. 0 for /dev/i2c-0\n"
+  ":param bus: The bus number to use, e.g. 0 for `/dev/i2c-0`\n"
   ":type bus: int\n"
   );
 static PyObject *I2CDev_init(I2CDev *self, PyObject *args, PyObject *kwds) {
@@ -76,7 +76,8 @@ PyDoc_STRVAR(I2CDev_open__doc__,
   ":type use_10bit_address: bool, optional\n"
   "\n"
   "Initialize the I2C bus interface, selecting whether the bus will use 10-bit\n"
-  "slave addresses or the standard 7-bit addresses.\n"
+  "slave addresses or the standard 7-bit addresses. Must be called before any\n"
+  "other methods.\n"
   );
 static PyObject *I2CDev_open(I2CDev *self, PyObject *args, PyObject *kwds) {
   uint8_t use_10bit_address;

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>PySerbus documentation &mdash; PySerbus 1.0.2 documentation</title>
+  <title>PySerbus &mdash; PySerbus 1.0.2 documentation</title>
   
 
   
@@ -114,7 +114,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="#">Docs</a> &raquo;</li>
       
-    <li>PySerbus documentation</li>
+    <li>PySerbus</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -128,9 +128,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="pyserbus-documentation">
-<h1>PySerbus documentation<a class="headerlink" href="#pyserbus-documentation" title="Permalink to this headline">¶</a></h1>
-<p>The serbus Python package provides slim APIs for communicating with I2C and SPI devices on GNU/Linux systems. It interfaces with the <cite>/dev/i2c-N</cite> and <cite>/dev/spidevX.Y</cite> device files provided by standard Linux I2C and SPI drivers.</p>
+  <div class="section" id="pyserbus">
+<h1>PySerbus<a class="headerlink" href="#pyserbus" title="Permalink to this headline">¶</a></h1>
+<p>The <cite>serbus</cite> Python package provides slim APIs for communicating with I2C and SPI devices on GNU/Linux systems. It interfaces with the <cite>/dev/i2c-N</cite> and <cite>/dev/spidevX.Y</cite> device files provided by standard Linux I2C and SPI drivers.</p>
+</div>
+<div class="section" id="why">
+<h1>Why?<a class="headerlink" href="#why" title="Permalink to this headline">¶</a></h1>
+<p>The serbus library was developed as part of <a class="reference external" href="https://github.com/graycatlabs/PyBBIO">PyBBIO</a>, a Python library for hardware IO support on the <a class="reference external" href="http://beagleboard.org/BLACK">BeagleBone Black</a>. There are already some Python packages for SPI and I2C communication, like <a class="reference external" href="https://pypi.python.org/pypi/spidev">spidev</a> and <a class="reference external" href="https://pypi.python.org/pypi/smbus-cffi">smbus</a>, but neither have very friendly APIs, and they both have some limitations. The <cite>serbus</cite> library was written from scratch for PyBBIO, to provide clean and simple APIs in both <a class="reference external" href="https://graycat.io/docs/serbus">C</a> and Python.</p>
 </div>
 <div class="section" id="contents">
 <h1>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h1>
@@ -143,21 +147,13 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="I2C.html">I2C</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="I2C.html#api">API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="I2C.html#examples">Examples</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="I2C.html#reading-data">Reading data</a></li>
-<li class="toctree-l3"><a class="reference internal" href="I2C.html#eeprom-memory">EEPROM memory</a></li>
-<li class="toctree-l3"><a class="reference internal" href="I2C.html#htu21d-humidity-sensor">HTU21D humidity sensor</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="I2C.html#examples">Examples</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="SPI.html">SPI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="SPI.html#api">API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="SPI.html#examples">Examples</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="SPI.html#reading-data">Reading data</a></li>
-<li class="toctree-l3"><a class="reference internal" href="SPI.html#ad7390-digital-to-analog-converter">AD7390 digital-to-analog converter</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="SPI.html#clock-modes">Clock Modes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="SPI.html#examples">Examples</a></li>
 </ul>
 </li>
 </ul>
@@ -166,6 +162,15 @@
 <li><a class="reference internal" href="genindex.html"><span>Index</span></a></li>
 <li><a class="reference internal" href="search.html"><span>Search Page</span></a></li>
 </ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><cite>PySerbus</cite> requires the <cite>/dev/i2c-N</cite> and <cite>/dev/spidevX.Y</cite> device files be present, and therefore relies on there being I2C and SPI drivers present and loaded.</p>
+<p class="last">I2C and SPI device files typically require root privileges to access, and therefore any programs using the <cite>serbus</cite> package will need to be run with root permissions.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Because PySerbus provides direct access to the SPI and I2C buses you could certainly cause some damage with it, e.g. putting an on-board device into a bad or unknown state - use at your own risk!</p>
+</div>
 </div>
 
 

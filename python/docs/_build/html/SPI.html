@@ -85,6 +85,7 @@
 <li class="toctree-l1"><a class="reference internal" href="I2C.html">I2C</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">SPI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#api">API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#clock-modes">Clock Modes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#reading-data">Reading data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ad7390-digital-to-analog-converter">AD7390 digital-to-analog converter</a></li>
@@ -138,7 +139,11 @@
             
   <div class="section" id="spi">
 <h1>SPI<a class="headerlink" href="#spi" title="Permalink to this headline">¶</a></h1>
-<p>The <a class="reference internal" href="#serbus.SPIDev" title="serbus.SPIDev"><code class="xref py py-class docutils literal"><span class="pre">serbus.SPIDev</span></code></a> class provides an API for interfacing with standard GNU/Linux spidev devices.</p>
+<p>The <a class="reference internal" href="#serbus.SPIDev" title="serbus.SPIDev"><code class="xref py py-class docutils literal"><span class="pre">serbus.SPIDev</span></code></a> class provides an API for interfacing with standard GNU/Linux spidev devices. It is instantiated with a bus number corresponding to the <cite>spidev</cite> device file it will use - to communicate with devices on the SPI bus connected to <cite>/dev/spidev0.X</cite> you could create the instance <code class="code docutils literal"><span class="pre">bus</span> <span class="pre">=</span> <span class="pre">serbus.SPIDev(0)</span></code>. The read/write methods then take a chip select as their first argument, so to read a byte from a device on chip select 1 of spidev0 (<cite>/dev/spidev0.1</cite>) you would call <code class="code docutils literal"><span class="pre">bus.read(1,</span> <span class="pre">1)</span></code>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For more info on SPI (Serial Peripheral Interface) see <a class="reference external" href="https://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus">https://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus</a></p>
+</div>
 <div class="section" id="api">
 <h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -149,7 +154,7 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>bus</strong> (<em>int</em>) &#8211; The bus number to use, e.g. 0 for /dev/spidev0.x</li>
+<li><strong>bus</strong> (<em>int</em>) &#8211; The bus number to use, e.g. 0 for <cite>/dev/spidev0.X</cite></li>
 <li><strong>mode_3wire</strong> (<em>bool, optional</em>) &#8211; <cite>True</cite> to enable 3-wire mode (half-duplex), <cite>False</cite> for
 standard 4-wire mode (default).</li>
 </ul>
@@ -254,7 +259,7 @@ standard 4-wire mode (default).</li>
 <dl class="method">
 <dt id="serbus.SPIDev.open">
 <code class="descname">open</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#serbus.SPIDev.open" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize the SPI interface.</p>
+<dd><p>Initialize the SPI interface - must be called before any other methods.</p>
 </dd></dl>
 
 <dl class="method">
@@ -371,7 +376,7 @@ select (default).</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">See:</th><td class="field-body"><a class="reference external" href="http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus#Mode_numbers">http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus#Mode_numbers</a></td>
+<tr class="field-odd field"><th class="field-name">See:</th><td class="field-body"><a class="reference external" href="https://graycat.io/docs/serbus/python/SPI.html#clock-modes">https://graycat.io/docs/serbus/python/SPI.html#clock-modes</a></td>
 </tr>
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><cite>IOError</cite> if unable to disable loopback mode.</td>
 </tr>
@@ -511,10 +516,45 @@ select.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="clock-modes">
+<h2>Clock Modes<a class="headerlink" href="#clock-modes" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>clock_mode</cite> parameter passed to <a class="reference internal" href="#serbus.SPIDev.setClockMode" title="serbus.SPIDev.setClockMode"><code class="xref py py-func docutils literal"><span class="pre">setClockMode()</span></code></a> tells the SPI kernel driver how to drive the clock signal. The SPI spec allows four possible clock configurations, and the required mode for a particular device will be given in its datasheet (sometimes explicitly, but often just shown visually in an SPI timing diagram). The possible modes are:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="22%" />
+<col width="28%" />
+<col width="50%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><cite>clock_mode</cite></td>
+<td>clock idle state</td>
+<td>clock edge data is captured on</td>
+</tr>
+<tr class="row-even"><td>0</td>
+<td>low</td>
+<td>rising edge</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>low</td>
+<td>falling edge</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>high</td>
+<td>falling edge</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>high</td>
+<td>rising edge</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>These are a few examples of using the SPIDev object. They will only work if you have the proper hardware connected to the system running them and your SPI kernel driver loaded. Depending on the system there may be additional required setup as well, such as configuring pin multiplexers on embedded GNU/Linux systems like the <a class="reference external" href="http://beagleboard.org/BLACK">BeagleBone Black</a>.</p>
 <div class="section" id="reading-data">
 <h3>Reading data<a class="headerlink" href="#reading-data" title="Permalink to this headline">¶</a></h3>
+<p>This example shows how to read a single word from an SPI device. It is not specific to any particular device.</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -561,6 +601,7 @@ select.</p>
 </div>
 <div class="section" id="ad7390-digital-to-analog-converter">
 <h3>AD7390 digital-to-analog converter<a class="headerlink" href="#ad7390-digital-to-analog-converter" title="Permalink to this headline">¶</a></h3>
+<p>This example shows how to control an <a class="reference external" href="http://www.analog.com/en/products/digital-to-analog-converters/da-converters/ad7390.html">AD7390</a> 12-bit SPI DAC (digital-to-analog converter).</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -624,6 +665,7 @@ select.</p>
   <span class="n">bus</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>
+<p>The AD7390 requires an active high chip slelct signal on its LD pin, and because it uses 12-bit values its word size in larger than the default 8-bits of many SPI modules - both of these are easy set with the included methods.</p>
 </div>
 </div>
 </div>

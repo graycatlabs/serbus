@@ -59,7 +59,7 @@ static void SPIDev_dealloc(SPIDev* self) {
 PyDoc_STRVAR(SPIDev_init__doc__,
   "SPIDev(bus[, mode_3wire=False])\n"
   "\n"
-  ":param bus: The bus number to use, e.g. 0 for /dev/spidev0.x\n"
+  ":param bus: The bus number to use, e.g. 0 for `/dev/spidev0.X`\n"
   ":type bus: int\n"
   ":param mode_3wire: `True` to enable 3-wire mode (half-duplex), `False` for\n"
   "                   standard 4-wire mode (default).\n"
@@ -86,7 +86,7 @@ static PyObject *SPIDev_init(SPIDev *self, PyObject *args, PyObject *kwds) {
 PyDoc_STRVAR(SPIDev_open__doc__,
   "SPIDev.open()\n"
   "\n"
-  "Initialize the SPI interface.\n"
+  "Initialize the SPI interface - must be called before any other methods.\n"
   );
 static PyObject *SPIDev_open(SPIDev *self, PyObject *args, PyObject *kwds) {
   self->spidev_fd[0] = SPI_open(self->bus, 0);
@@ -561,7 +561,7 @@ PyDoc_STRVAR(SPIDev_setClockMode__doc__,
   "\n"
   "Sets the clock mode for the given chip select of the SPI interface.\n"
   "\n"
-  ":see: http://en.wikipedia.org/wiki/Serial_Peripheral_Interface_Bus#Mode_numbers\n"
+  ":see: https://graycat.io/docs/serbus/python/SPI.html#clock-modes\n"
   "\n"
   ":raises: `IOError` if unable to disable loopback mode.\n"
   );

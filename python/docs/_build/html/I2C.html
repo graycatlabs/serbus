@@ -140,7 +140,11 @@
             
   <div class="section" id="i2c">
 <h1>I2C<a class="headerlink" href="#i2c" title="Permalink to this headline">¶</a></h1>
-<p>The <a class="reference internal" href="#serbus.I2CDev" title="serbus.I2CDev"><code class="xref py py-class docutils literal"><span class="pre">serbus.I2CDev</span></code></a> class provides an API for interfacing with standard GNU/Linux spidev devices.</p>
+<p>The <a class="reference internal" href="#serbus.I2CDev" title="serbus.I2CDev"><code class="xref py py-class docutils literal"><span class="pre">serbus.I2CDev</span></code></a> class provides an API for interfacing with standard GNU/Linux spidev devices. It is instantiated with a bus number corresponding to the I2C bus device file it will use - to communicate with devices on the I2C bus connected to <cite>/dev/i2c-0</cite> you could create the instance <code class="code docutils literal"><span class="pre">bus</span> <span class="pre">=</span> <span class="pre">serbus.I2CDev(0)</span></code>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For more info on I2C (Inter-Integrated Circuit) see <a class="reference external" href="https://en.wikipedia.org/wiki/I%C2%B2C">https://en.wikipedia.org/wiki/I%C2%B2C</a></p>
+</div>
 <div class="section" id="api">
 <h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -150,7 +154,7 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>bus</strong> (<em>int</em>) &#8211; The bus number to use, e.g. 0 for /dev/i2c-0</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>bus</strong> (<em>int</em>) &#8211; The bus number to use, e.g. 0 for <cite>/dev/i2c-0</cite></td>
 </tr>
 </tbody>
 </table>
@@ -173,7 +177,8 @@
 </tbody>
 </table>
 <p>Initialize the I2C bus interface, selecting whether the bus will use 10-bit
-slave addresses or the standard 7-bit addresses.</p>
+slave addresses or the standard 7-bit addresses. Must be called before any
+other methods.</p>
 </dd></dl>
 
 <dl class="method">
@@ -246,8 +251,10 @@ given address.</p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>These are a few examples of using the I2CDev object. They will only work if you have the proper hardware connected to the system running them and your I2C kernel driver loaded. Depending on the system there may be additional required setup as well, such as configuring pin multiplexers on embedded GNU/Linux systems like the <a class="reference external" href="http://beagleboard.org/BLACK">BeagleBone Black</a>.</p>
 <div class="section" id="reading-data">
 <h3>Reading data<a class="headerlink" href="#reading-data" title="Permalink to this headline">¶</a></h3>
+<p>This example shows how to read a single byte from an I2C device. It is not specific to any particular device.</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -274,6 +281,7 @@ given address.</p>
 </div>
 <div class="section" id="eeprom-memory">
 <h3>EEPROM memory<a class="headerlink" href="#eeprom-memory" title="Permalink to this headline">¶</a></h3>
+<p>In this example, a sequence of bytes are written to a <a class="reference external" href="http://www.microchip.com/wwwproducts/Devices.aspx?product=24LC256">24LC256</a> (or equivalent) I2C EEPROM, then reading them back to verify they have been written.</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -333,9 +341,11 @@ given address.</p>
 <span class="n">bus</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>
+<p>For this to work, the EEPROM&#8217;s <em>WP</em> (write protect) pin must be pulled down to GND to allow writing.</p>
 </div>
 <div class="section" id="htu21d-humidity-sensor">
 <h3>HTU21D humidity sensor<a class="headerlink" href="#htu21d-humidity-sensor" title="Permalink to this headline">¶</a></h3>
+<p>This example shows how the <cite>I2CDev</cite> class can be used to measure relative humidity and temperature from the <a class="reference external" href="http://www.meas-spec.com/product/humidity/HTU21D.aspx">HTU21D</a> I2C humidity sensor.</p>
 <div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3

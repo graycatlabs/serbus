@@ -101,6 +101,13 @@ Include dependency graph for i2cdriver.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="i2cdriver_8h__incl.png" border="0" usemap="#include_2i2cdriver_8h" alt=""/></div>
 </div>
+</div><div class="textblock"><div class="dynheader">
+This graph shows which files directly or indirectly include this file:</div>
+<div class="dyncontent">
+<div class="center"><img src="i2cdriver_8h__dep__incl.png" border="0" usemap="#include_2i2cdriver_8hdep" alt=""/></div>
+<map name="include_2i2cdriver_8hdep" id="include_2i2cdriver_8hdep">
+<area shape="rect" id="node2" href="i2c__htu21d_8c.html" title="Uses serbus to get RH and temperature data from an HTU21D. " alt="" coords="5,80,161,107"/></map>
+</div>
 </div>
 <p><a href="i2cdriver_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -134,7 +141,71 @@ Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A basic driver for controlling Linux I2C interfaces. </p>
 <dl class="section author"><dt>Author</dt><dd>Alex Hiam - <a href="#" onclick="location.href='mai'+'lto:'+'ale'+'x@'+'gra'+'yc'+'at.'+'io'; return false;">alex@<span style="display: none;">.nosp@m.</span>gray<span style="display: none;">.nosp@m.</span>cat.i<span style="display: none;">.nosp@m.</span>o</a></dd></dl>
-<p>Requires an I2C Kernel driver be loaded to expose /dev/i2c-N interfaces which provide the standard Linux I2C ioctls. This driver is really just an ioctl wrapper. </p>
+<p>Requires an I2C Kernel driver be loaded to expose /dev/i2c-N interfaces which provide the standard Linux I2C ioctls. This driver is really just an ioctl wrapper.</p>
+<dl class="section see"><dt>See also</dt><dd><code><a class="el" href="i2c__htu21d_8c.html" title="Uses serbus to get RH and temperature data from an HTU21D. ">examples/i2c_htu21d.c</a></code> <div class="fragment"><div class="line"></div>
+<div class="line"><span class="preprocessor">#include &quot;<a class="code" href="i2cdriver_8h.html">i2cdriver.h</a>&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor">#define HTU21D_BUS      1    // Connected to /dev/i2c-1</span></div>
+<div class="line"><span class="preprocessor">#define HTU21D_ADDR     0x40 // HTU21D slave address</span></div>
+<div class="line"><span class="preprocessor">#define HTU21D_CMD_TEMP 0xe3 // Command to read temperature</span></div>
+<div class="line"><span class="preprocessor">#define HTU21D_CMD_RH   0xe5 // Command to read relative humidity</span></div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">float</span> <a class="code" href="i2c__htu21d_8c.html#a49fff5426126b4dcc290715fcde0ea17">getTemp</a>(<span class="keywordtype">int</span> i2c_fd) {</div>
+<div class="line">  uint8_t rx_buffer[3];</div>
+<div class="line">  <span class="keywordtype">int</span> raw_value;</div>
+<div class="line">  <span class="comment">// Set the slave address:</span></div>
+<div class="line">  <span class="keywordflow">if</span> (<a class="code" href="i2cdriver_8h.html#aa78b1a1354344e7010843cffe962df89">I2C_setSlaveAddress</a>(i2c_fd, HTU21D_ADDR) &lt; 0) {</div>
+<div class="line">    printf(<span class="stringliteral">&quot;*Could set slave address to %d\n&quot;</span>, HTU21D_ADDR);</div>
+<div class="line">    exit(0);</div>
+<div class="line">  }</div>
+<div class="line">  <span class="comment">// Read the 3 bytes of data:</span></div>
+<div class="line">  <a class="code" href="i2cdriver_8h.html#a4fb00c476124be12a5484290051cc465">I2C_readTransaction</a>(i2c_fd, HTU21D_CMD_TEMP, (<span class="keywordtype">void</span>*) rx_buffer, 3);</div>
+<div class="line">  <span class="comment">// The crc (cyclic redundancy check) can be used to verify the data was </span></div>
+<div class="line">  <span class="comment">// received without error - ignore it here</span></div>
+<div class="line">  <span class="comment">// Combine the high and low bytes:</span></div>
+<div class="line">  raw_value = (rx_buffer[0]&lt;&lt;8) | rx_buffer[1];</div>
+<div class="line">  <span class="comment">// Clear the two status bits (see datasheet):</span></div>
+<div class="line">  raw_value &amp;= ~0b11;</div>
+<div class="line">  <span class="comment">// Convert to Celsius and return (conversion from datasheet):</span></div>
+<div class="line">  <span class="keywordflow">return</span> -46.85 + 175.72 * (((float)raw_value)/65536.0);</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">float</span> <a class="code" href="i2c__htu21d_8c.html#a8780301999f380379b2fa2491ac6ccc1">getRH</a>(<span class="keywordtype">int</span> i2c_fd) {</div>
+<div class="line">  uint8_t rx_buffer[3];</div>
+<div class="line">  <span class="keywordtype">int</span> raw_value;</div>
+<div class="line">  <span class="keywordflow">if</span> (<a class="code" href="i2cdriver_8h.html#aa78b1a1354344e7010843cffe962df89">I2C_setSlaveAddress</a>(i2c_fd, HTU21D_ADDR) &lt; 0) {</div>
+<div class="line">    printf(<span class="stringliteral">&quot;*Could set slave address to %d\n&quot;</span>, HTU21D_ADDR);</div>
+<div class="line">    exit(0);</div>
+<div class="line">  }</div>
+<div class="line">  <a class="code" href="i2cdriver_8h.html#a4fb00c476124be12a5484290051cc465">I2C_readTransaction</a>(i2c_fd, HTU21D_CMD_RH, (<span class="keywordtype">void</span>*) rx_buffer, 3);</div>
+<div class="line">  raw_value = (rx_buffer[0]&lt;&lt;8) | rx_buffer[1];</div>
+<div class="line">  raw_value &amp;= ~0b11;</div>
+<div class="line">  <span class="comment">// Convert to %RH and return (conversion from datasheet):</span></div>
+<div class="line">  <span class="keywordflow">return</span> -6.0 + 125.0 * (raw_value/65536.0);</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">  <span class="keywordtype">int</span> i2c_fd;</div>
+<div class="line">  <span class="keywordtype">float</span> temp, rh;</div>
+<div class="line">  <span class="comment">// Open the I2C device file:</span></div>
+<div class="line">  i2c_fd = <a class="code" href="i2cdriver_8h.html#a5df2435ff8cec2b6de06a473cf427864">I2C_open</a>(HTU21D_BUS);</div>
+<div class="line">  <span class="keywordflow">if</span> (i2c_fd &lt; 0) {</div>
+<div class="line">    printf(<span class="stringliteral">&quot;*Could not open I2C bus %d\n&quot;</span>, HTU21D_BUS);</div>
+<div class="line">    exit(0);</div>
+<div class="line">  }</div>
+<div class="line">  <span class="comment">// Read and print the current temp and rh:</span></div>
+<div class="line">  temp = <a class="code" href="i2c__htu21d_8c.html#a49fff5426126b4dcc290715fcde0ea17">getTemp</a>(i2c_fd);</div>
+<div class="line">  rh = <a class="code" href="i2c__htu21d_8c.html#a8780301999f380379b2fa2491ac6ccc1">getRH</a>(i2c_fd);</div>
+<div class="line">  printf(<span class="stringliteral">&quot;Temp : %5.2fC\n&quot;</span>, temp);</div>
+<div class="line">  printf(<span class="stringliteral">&quot;RH   : %5.2f%%\n&quot;</span>, rh);</div>
+<div class="line">  <span class="comment">// Close the I2C file descriptor:</span></div>
+<div class="line">  <a class="code" href="i2cdriver_8h.html#a097ccdcc5540327f0df6118700a68364">I2C_close</a>(i2c_fd);</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+</div><!-- fragment --> </dd></dl>
 
 <p>Definition in file <a class="el" href="i2cdriver_8h_source.html">i2cdriver.h</a>.</p>
 </div><h2 class="groupheader">Function Documentation</h2>
@@ -416,7 +487,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 23 2015 17:19:59 for Serbus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 24 2015 14:36:53 for Serbus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

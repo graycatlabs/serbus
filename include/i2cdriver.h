@@ -29,6 +29,9 @@
  * Requires an I2C Kernel driver be loaded to expose /dev/i2c-N interfaces 
  * which provide the standard Linux I2C ioctls. This driver is really just an 
  * ioctl wrapper.
+ *
+ * @see 
+ *  `examples/i2c_htu21d.c` @include i2c_htu21d.c
  */
 
 #ifndef _I2C_DRIVER_H_

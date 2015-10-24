@@ -103,6 +103,13 @@ Include dependency graph for spidriver.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="spidriver_8h__incl.png" border="0" usemap="#include_2spidriver_8h" alt=""/></div>
 </div>
+</div><div class="textblock"><div class="dynheader">
+This graph shows which files directly or indirectly include this file:</div>
+<div class="dyncontent">
+<div class="center"><img src="spidriver_8h__dep__incl.png" border="0" usemap="#include_2spidriver_8hdep" alt=""/></div>
+<map name="include_2spidriver_8hdep" id="include_2spidriver_8hdep">
+<area shape="rect" id="node2" href="spi__ad7390_8c.html" title="Uses serbus to control an AD7390 DAC. " alt="" coords="5,80,164,107"/></map>
+</div>
 </div>
 <p><a href="spidriver_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -185,7 +192,70 @@ Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A basic driver for controlling Linux spidev interfaces. </p>
 <dl class="section author"><dt>Author</dt><dd>Alex Hiam - <a href="#" onclick="location.href='mai'+'lto:'+'ale'+'x@'+'gra'+'yc'+'at.'+'io'; return false;">alex@<span style="display: none;">.nosp@m.</span>gray<span style="display: none;">.nosp@m.</span>cat.i<span style="display: none;">.nosp@m.</span>o</a></dd></dl>
-<p>Requires an SPI Kernel driver be loaded to expose /dev/spidevX.Y interfaces which provide the standard Linux SPI ioctls. This driver is really just an ioctl wrapper. </p>
+<p>Requires an SPI Kernel driver be loaded to expose /dev/spidevX.Y interfaces which provide the standard Linux SPI ioctls. This driver is really just an ioctl wrapper.</p>
+<dl class="section see"><dt>See also</dt><dd><code><a class="el" href="spi__ad7390_8c.html" title="Uses serbus to control an AD7390 DAC. ">examples/spi_ad7390.c</a></code> <div class="fragment"><div class="line"></div>
+<div class="line"><span class="preprocessor">#include &quot;<a class="code" href="spidriver_8h.html">spidriver.h</a>&quot;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;signal.h&gt;</span></div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor">#define AD7390_BUS       1        // Connected to /dev/spidev1.X bus</span></div>
+<div class="line"><span class="preprocessor">#define AD7390_CS        0        // Using chip select 0 (/dev/spidev1.0)</span></div>
+<div class="line"><span class="preprocessor">#define AD7390_FREQ      1000000  // SPI clock frequency in Hz</span></div>
+<div class="line"><span class="preprocessor">#define AD7390_BITS      16       // SPI bits per word</span></div>
+<div class="line"><span class="preprocessor">#define AD7390_CLOCKMODE 3        // SPI clock mode</span></div>
+<div class="line"></div>
+<div class="line"><span class="keyword">static</span> uint8_t running;</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> <a class="code" href="spi__ad7390_8c.html#a2a512b31146b2cda1657e3201402b9ad">AD7390_SPIConfig</a>(<span class="keywordtype">int</span> spi_fd) {</div>
+<div class="line">  <a class="code" href="spidriver_8h.html#af60601f12d58cb00180f16c245191dda">SPI_setMaxFrequency</a>(spi_fd, AD7390_FREQ);</div>
+<div class="line">  <a class="code" href="spidriver_8h.html#ad65e7362ab689c4de7d31f9ab19777fe">SPI_setBitsPerWord</a>(spi_fd, AD7390_BITS);</div>
+<div class="line">  <a class="code" href="spidriver_8h.html#ad02fbb762c5783f45db896b133cdf9ff">SPI_setClockMode</a>(spi_fd, AD7390_CLOCKMODE);</div>
+<div class="line">  <a class="code" href="spidriver_8h.html#a0cb07d57c9422bacb7229e00546ad426">SPI_setCSActiveHigh</a>(spi_fd);</div>
+<div class="line">  <a class="code" href="spidriver_8h.html#ab2adb8ed5190c8c0cc112fceea89098d">SPI_setBitOrder</a>(spi_fd, <a class="code" href="spidriver_8h.html#a31bd35a1aecbf364e888c14b090ff3d4a3fa35f661bf7fbb96c05ff70827553be">SPI_MSBFIRST</a>);</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> <a class="code" href="spi__ad7390_8c.html#ac81c90f47d77aab40f41db9d14b947f9">AD7390_setValue</a>(<span class="keywordtype">int</span> spi_fd, uint16_t value) {</div>
+<div class="line">  <a class="code" href="spidriver_8h.html#a665527500ba4a01476e2a0b5cda44d41">SPI_write</a>(spi_fd, (<span class="keywordtype">void</span>*) &amp;value, 1);</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> <a class="code" href="spi__ad7390_8c.html#aeb905a8fe359d78f6e1de27749e307d7">stopHandler</a>(<span class="keywordtype">int</span> sig) {</div>
+<div class="line">  running = 0;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">  <span class="keywordtype">int</span> spi_fd, value;</div>
+<div class="line">  <span class="comment">// Open the SPI device file:</span></div>
+<div class="line">  spi_fd = <a class="code" href="spidriver_8h.html#af608773d4a769343f1967258b273971b">SPI_open</a>(AD7390_BUS, AD7390_CS);</div>
+<div class="line">  <span class="keywordflow">if</span> (spi_fd &lt; 0) {</div>
+<div class="line">    printf(<span class="stringliteral">&quot;*Could not open SPI bus %d\n&quot;</span>, AD7390_BUS);</div>
+<div class="line">    exit(0);</div>
+<div class="line">  }</div>
+<div class="line">  <span class="comment">// Configure the SPI bus:</span></div>
+<div class="line">  <a class="code" href="spi__ad7390_8c.html#a2a512b31146b2cda1657e3201402b9ad">AD7390_SPIConfig</a>(spi_fd);</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">// Loop until Ctrl+C pressed:</span></div>
+<div class="line">  running = 1;</div>
+<div class="line">  signal(SIGINT, <a class="code" href="spi__ad7390_8c.html#aeb905a8fe359d78f6e1de27749e307d7">stopHandler</a>);</div>
+<div class="line">  <span class="keywordflow">while</span>(running) {</div>
+<div class="line">  <span class="comment">// Ramp up from 0V to full-scale:</span></div>
+<div class="line">    <span class="keywordflow">for</span> (value=0; value&lt;4095; value++) {</div>
+<div class="line">      <a class="code" href="spi__ad7390_8c.html#ac81c90f47d77aab40f41db9d14b947f9">AD7390_setValue</a>(spi_fd, value);</div>
+<div class="line">    }</div>
+<div class="line">    <span class="comment">// Ramp down from full-scale to 0V:</span></div>
+<div class="line">    <span class="keywordflow">for</span> (value=4096; value&gt;0; value--) {</div>
+<div class="line">      <a class="code" href="spi__ad7390_8c.html#ac81c90f47d77aab40f41db9d14b947f9">AD7390_setValue</a>(spi_fd, value);</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line">  <span class="comment">// Set DAC output to 0 and close the SPI file descriptor:</span></div>
+<div class="line">  <a class="code" href="spi__ad7390_8c.html#ac81c90f47d77aab40f41db9d14b947f9">AD7390_setValue</a>(spi_fd, 0);</div>
+<div class="line">  <a class="code" href="spidriver_8h.html#a7ff9166531a3a53a0204f4814af37984">SPI_close</a>(spi_fd);</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="line"></div>
+</div><!-- fragment --> </dd></dl>
 
 <p>Definition in file <a class="el" href="spidriver_8h_source.html">spidriver.h</a>.</p>
 </div><h2 class="groupheader">Enumeration Type Documentation</h2>
@@ -208,7 +278,7 @@ Functions</h2></td></tr>
 </td></tr>
 </table>
 
-<p>Definition at line <a class="el" href="spidriver_8h_source.html#l00107">107</a> of file <a class="el" href="spidriver_8h_source.html">spidriver.h</a>.</p>
+<p>Definition at line <a class="el" href="spidriver_8h_source.html#l00110">110</a> of file <a class="el" href="spidriver_8h_source.html">spidriver.h</a>.</p>
 
 </div>
 </div>
@@ -897,7 +967,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 23 2015 17:19:59 for Serbus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 24 2015 14:36:53 for Serbus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

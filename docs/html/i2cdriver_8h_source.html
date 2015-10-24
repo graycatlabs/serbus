@@ -112,28 +112,28 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"> * THE SOFTWARE.</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment"> ******************************************************************************/</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#ifndef _I2C_DRIVER_H_</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#define _I2C_DRIVER_H_</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keywordtype">int</span> <a class="code" href="i2cdriver_8h.html#a5df2435ff8cec2b6de06a473cf427864">I2C_open</a>(uint8_t bus);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keywordtype">void</span> <a class="code" href="i2cdriver_8h.html#a097ccdcc5540327f0df6118700a68364">I2C_close</a>(<span class="keywordtype">int</span> i2c_fd);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keywordtype">int</span> <a class="code" href="i2cdriver_8h.html#abc7c776c69df4882cb483e30eb4404d0">I2C_enable10BitAddressing</a>(<span class="keywordtype">int</span> i2c_fd);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keywordtype">int</span> <a class="code" href="i2cdriver_8h.html#a1d2c05b3127b4520cc09ee3b80709a8c">I2C_disable10BitAddressing</a>(<span class="keywordtype">int</span> i2c_fd);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keywordtype">int</span> <a class="code" href="i2cdriver_8h.html#aa78b1a1354344e7010843cffe962df89">I2C_setSlaveAddress</a>(<span class="keywordtype">int</span> i2c_fd, <span class="keywordtype">int</span> addr);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="keywordtype">int</span> <a class="code" href="i2cdriver_8h.html#ac9c2d06e7ea0e9c01a840841743b27c5">I2C_read</a>(<span class="keywordtype">int</span> i2c_fd, <span class="keywordtype">void</span> *rx_buffer, <span class="keywordtype">int</span> n_bytes);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="keywordtype">int</span> <a class="code" href="i2cdriver_8h.html#a4fb00c476124be12a5484290051cc465">I2C_readTransaction</a>(<span class="keywordtype">int</span> i2c_fd, uint8_t byte, <span class="keywordtype">void</span> *rx_buffer, <span class="keywordtype">int</span> n_bytes);</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="keywordtype">int</span> <a class="code" href="i2cdriver_8h.html#a4889f4597892b63190e1d9e4dd4bb209">I2C_write</a>(<span class="keywordtype">int</span> i2c_fd, <span class="keywordtype">void</span> *tx_buffer, <span class="keywordtype">int</span> n_bytes);</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;</div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="preprocessor">#endif // _I2C_DRIVER_H_</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#ifndef _I2C_DRIVER_H_</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#define _I2C_DRIVER_H_</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keywordtype">int</span> <a class="code" href="i2cdriver_8h.html#a5df2435ff8cec2b6de06a473cf427864">I2C_open</a>(uint8_t bus);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keywordtype">void</span> <a class="code" href="i2cdriver_8h.html#a097ccdcc5540327f0df6118700a68364">I2C_close</a>(<span class="keywordtype">int</span> i2c_fd);</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keywordtype">int</span> <a class="code" href="i2cdriver_8h.html#abc7c776c69df4882cb483e30eb4404d0">I2C_enable10BitAddressing</a>(<span class="keywordtype">int</span> i2c_fd);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keywordtype">int</span> <a class="code" href="i2cdriver_8h.html#a1d2c05b3127b4520cc09ee3b80709a8c">I2C_disable10BitAddressing</a>(<span class="keywordtype">int</span> i2c_fd);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;<span class="keywordtype">int</span> <a class="code" href="i2cdriver_8h.html#aa78b1a1354344e7010843cffe962df89">I2C_setSlaveAddress</a>(<span class="keywordtype">int</span> i2c_fd, <span class="keywordtype">int</span> addr);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="keywordtype">int</span> <a class="code" href="i2cdriver_8h.html#ac9c2d06e7ea0e9c01a840841743b27c5">I2C_read</a>(<span class="keywordtype">int</span> i2c_fd, <span class="keywordtype">void</span> *rx_buffer, <span class="keywordtype">int</span> n_bytes);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="keywordtype">int</span> <a class="code" href="i2cdriver_8h.html#a4fb00c476124be12a5484290051cc465">I2C_readTransaction</a>(<span class="keywordtype">int</span> i2c_fd, uint8_t byte, <span class="keywordtype">void</span> *rx_buffer, <span class="keywordtype">int</span> n_bytes);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="keywordtype">int</span> <a class="code" href="i2cdriver_8h.html#a4889f4597892b63190e1d9e4dd4bb209">I2C_write</a>(<span class="keywordtype">int</span> i2c_fd, <span class="keywordtype">void</span> *tx_buffer, <span class="keywordtype">int</span> n_bytes);</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="preprocessor">#endif // _I2C_DRIVER_H_</span></div>
 <div class="ttc" id="i2cdriver_8h_html_a4fb00c476124be12a5484290051cc465"><div class="ttname"><a href="i2cdriver_8h.html#a4fb00c476124be12a5484290051cc465">I2C_readTransaction</a></div><div class="ttdeci">int I2C_readTransaction(int i2c_fd, uint8_t byte, void *rx_buffer, int n_bytes)</div><div class="ttdoc">Writes the given command then reads a block from the given I2C interface. </div></div>
 <div class="ttc" id="i2cdriver_8h_html_a1d2c05b3127b4520cc09ee3b80709a8c"><div class="ttname"><a href="i2cdriver_8h.html#a1d2c05b3127b4520cc09ee3b80709a8c">I2C_disable10BitAddressing</a></div><div class="ttdeci">int I2C_disable10BitAddressing(int i2c_fd)</div><div class="ttdoc">Disables 10-bit addressing the given I2C interface. </div></div>
 <div class="ttc" id="i2cdriver_8h_html_ac9c2d06e7ea0e9c01a840841743b27c5"><div class="ttname"><a href="i2cdriver_8h.html#ac9c2d06e7ea0e9c01a840841743b27c5">I2C_read</a></div><div class="ttdeci">int I2C_read(int i2c_fd, void *rx_buffer, int n_bytes)</div><div class="ttdoc">Reads a block from the given I2C interface. </div></div>
@@ -145,7 +145,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 23 2015 17:19:59 for Serbus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 24 2015 14:36:53 for Serbus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

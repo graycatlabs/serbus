@@ -29,6 +29,9 @@
  * Requires an SPI Kernel driver be loaded to expose /dev/spidevX.Y interfaces 
  * which provide the standard Linux SPI ioctls. This driver is really just an 
  * ioctl wrapper.
+ *
+ * @see 
+ *  `examples/spi_ad7390.c` @include spi_ad7390.c
  */
 
 #ifndef _SPI_DRIVER_H_

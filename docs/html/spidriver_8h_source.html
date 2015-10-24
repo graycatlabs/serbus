@@ -112,65 +112,65 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="comment"> * THE SOFTWARE.</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment"> ******************************************************************************/</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#ifndef _SPI_DRIVER_H_</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#define _SPI_DRIVER_H_</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#include &lt;linux/spi/spidev.h&gt;</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#ifndef _SPI_DRIVER_H_</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#define _SPI_DRIVER_H_</span></div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#af608773d4a769343f1967258b273971b">SPI_open</a>(uint8_t bus, uint8_t cs);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keywordtype">void</span> <a class="code" href="spidriver_8h.html#a7ff9166531a3a53a0204f4814af37984">SPI_close</a>(<span class="keywordtype">int</span> spidev_fd);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#aecb40c484f3e3aeec9e496e26b75cd7f">SPI_read</a>(<span class="keywordtype">int</span> spidev_fd, <span class="keywordtype">void</span> *rx_buffer, <span class="keywordtype">int</span> n_words);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#a665527500ba4a01476e2a0b5cda44d41">SPI_write</a>(<span class="keywordtype">int</span> spidev_fd, <span class="keywordtype">void</span> *tx_buffer, <span class="keywordtype">int</span> n_words);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#a597d2232d2925b4e436a7c23eae4d3d3">SPI_transfer</a>(<span class="keywordtype">int</span> spidev_fd, <span class="keywordtype">void</span> *tx_buffer, <span class="keywordtype">void</span> *rx_buffer, <span class="keywordtype">int</span> n_words);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
-<div class="line"><a name="l00107"></a><span class="lineno"><a class="line" href="spidriver_8h.html#a31bd35a1aecbf364e888c14b090ff3d4">  107</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">enum</span> { </div>
-<div class="line"><a name="l00108"></a><span class="lineno"><a class="line" href="spidriver_8h.html#a31bd35a1aecbf364e888c14b090ff3d4a3fa35f661bf7fbb96c05ff70827553be">  108</a></span>&#160;  <a class="code" href="spidriver_8h.html#a31bd35a1aecbf364e888c14b090ff3d4a3fa35f661bf7fbb96c05ff70827553be">SPI_MSBFIRST</a>, </div>
-<div class="line"><a name="l00109"></a><span class="lineno"><a class="line" href="spidriver_8h.html#a31bd35a1aecbf364e888c14b090ff3d4a183d076e845f5ea5d99465cd6aff505f">  109</a></span>&#160;  <a class="code" href="spidriver_8h.html#a31bd35a1aecbf364e888c14b090ff3d4a183d076e845f5ea5d99465cd6aff505f">SPI_LSBFIRST</a>  </div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;} <a class="code" href="spidriver_8h.html#a31bd35a1aecbf364e888c14b090ff3d4">SPI_bit_order</a>;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; <span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#ab2adb8ed5190c8c0cc112fceea89098d">SPI_setBitOrder</a>(<span class="keywordtype">int</span> spidev_fd, <a class="code" href="spidriver_8h.html#a31bd35a1aecbf364e888c14b090ff3d4">SPI_bit_order</a> bit_order);</div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#ad65e7362ab689c4de7d31f9ab19777fe">SPI_setBitsPerWord</a>(<span class="keywordtype">int</span> spidev_fd, uint8_t bits_per_word);</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#ac60f1a39c48d5c3ae9bbed420cce8551">SPI_getBitsPerWord</a>(<span class="keywordtype">int</span> spidev_fd);</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#af60601f12d58cb00180f16c245191dda">SPI_setMaxFrequency</a>(<span class="keywordtype">int</span> spidev_fd, uint32_t frequency);</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#a33876b63ecaab993dbdca380bdaa2dab">SPI_getMaxFrequency</a>(<span class="keywordtype">int</span> spidev_fd);</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#ad02fbb762c5783f45db896b133cdf9ff">SPI_setClockMode</a>(<span class="keywordtype">int</span> spidev_fd, uint8_t clock_mode);</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;</div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#acf0c4b6dd9a5f1bf164d336858ef9d63">SPI_getClockMode</a>(<span class="keywordtype">int</span> spidev_fd);</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#ab7d5d25b529b1c937649a8ef5bb45218">SPI_setCSActiveLow</a>(<span class="keywordtype">int</span> spidev_fd);</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#a0cb07d57c9422bacb7229e00546ad426">SPI_setCSActiveHigh</a>(<span class="keywordtype">int</span> spidev_fd);</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#ab8bffff4f109622f5425c353fd8b5851">SPI_enableCS</a>(<span class="keywordtype">int</span> spidev_fd);</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#a765c913618ea80e9ad453d8ab2120b60">SPI_disableCS</a>(<span class="keywordtype">int</span> spidev_fd);</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#ad8f59619ae9d1f2d97b0e0969bb612e1">SPI_enableLoopback</a>(<span class="keywordtype">int</span> spidev_fd);</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#a0208c430a384927f4a8f0eaf90fe9d41">SPI_disableLoopback</a>(<span class="keywordtype">int</span> spidev_fd);</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#af319540760d84fa649545616be122399">SPI_enable3Wire</a>(<span class="keywordtype">int</span> spidev_fd);</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#a271b02468019ecb7746ea404772b2e6c">SPI_disable3Wire</a>(<span class="keywordtype">int</span> spidev_fd);</div>
-<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#a74608d149677e6ac4918457dd426ab51">SPI_setMode</a>(<span class="keywordtype">int</span> spidev_fd, uint8_t mode);</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#a67d1d21089f0347199f627298cb18f69">SPI_getMode</a>(<span class="keywordtype">int</span> spidev_fd);</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;<span class="preprocessor">#endif // _SPI_DRIVER_H_</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#include &lt;linux/spi/spidev.h&gt;</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#af608773d4a769343f1967258b273971b">SPI_open</a>(uint8_t bus, uint8_t cs);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keywordtype">void</span> <a class="code" href="spidriver_8h.html#a7ff9166531a3a53a0204f4814af37984">SPI_close</a>(<span class="keywordtype">int</span> spidev_fd);</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#aecb40c484f3e3aeec9e496e26b75cd7f">SPI_read</a>(<span class="keywordtype">int</span> spidev_fd, <span class="keywordtype">void</span> *rx_buffer, <span class="keywordtype">int</span> n_words);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#a665527500ba4a01476e2a0b5cda44d41">SPI_write</a>(<span class="keywordtype">int</span> spidev_fd, <span class="keywordtype">void</span> *tx_buffer, <span class="keywordtype">int</span> n_words);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#a597d2232d2925b4e436a7c23eae4d3d3">SPI_transfer</a>(<span class="keywordtype">int</span> spidev_fd, <span class="keywordtype">void</span> *tx_buffer, <span class="keywordtype">void</span> *rx_buffer, <span class="keywordtype">int</span> n_words);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00110"></a><span class="lineno"><a class="line" href="spidriver_8h.html#a31bd35a1aecbf364e888c14b090ff3d4">  110</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">enum</span> { </div>
+<div class="line"><a name="l00111"></a><span class="lineno"><a class="line" href="spidriver_8h.html#a31bd35a1aecbf364e888c14b090ff3d4a3fa35f661bf7fbb96c05ff70827553be">  111</a></span>&#160;  <a class="code" href="spidriver_8h.html#a31bd35a1aecbf364e888c14b090ff3d4a3fa35f661bf7fbb96c05ff70827553be">SPI_MSBFIRST</a>, </div>
+<div class="line"><a name="l00112"></a><span class="lineno"><a class="line" href="spidriver_8h.html#a31bd35a1aecbf364e888c14b090ff3d4a183d076e845f5ea5d99465cd6aff505f">  112</a></span>&#160;  <a class="code" href="spidriver_8h.html#a31bd35a1aecbf364e888c14b090ff3d4a183d076e845f5ea5d99465cd6aff505f">SPI_LSBFIRST</a>  </div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;} <a class="code" href="spidriver_8h.html#a31bd35a1aecbf364e888c14b090ff3d4">SPI_bit_order</a>;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; <span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#ab2adb8ed5190c8c0cc112fceea89098d">SPI_setBitOrder</a>(<span class="keywordtype">int</span> spidev_fd, <a class="code" href="spidriver_8h.html#a31bd35a1aecbf364e888c14b090ff3d4">SPI_bit_order</a> bit_order);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#ad65e7362ab689c4de7d31f9ab19777fe">SPI_setBitsPerWord</a>(<span class="keywordtype">int</span> spidev_fd, uint8_t bits_per_word);</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#ac60f1a39c48d5c3ae9bbed420cce8551">SPI_getBitsPerWord</a>(<span class="keywordtype">int</span> spidev_fd);</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#af60601f12d58cb00180f16c245191dda">SPI_setMaxFrequency</a>(<span class="keywordtype">int</span> spidev_fd, uint32_t frequency);</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#a33876b63ecaab993dbdca380bdaa2dab">SPI_getMaxFrequency</a>(<span class="keywordtype">int</span> spidev_fd);</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#ad02fbb762c5783f45db896b133cdf9ff">SPI_setClockMode</a>(<span class="keywordtype">int</span> spidev_fd, uint8_t clock_mode);</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#acf0c4b6dd9a5f1bf164d336858ef9d63">SPI_getClockMode</a>(<span class="keywordtype">int</span> spidev_fd);</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#ab7d5d25b529b1c937649a8ef5bb45218">SPI_setCSActiveLow</a>(<span class="keywordtype">int</span> spidev_fd);</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#a0cb07d57c9422bacb7229e00546ad426">SPI_setCSActiveHigh</a>(<span class="keywordtype">int</span> spidev_fd);</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#ab8bffff4f109622f5425c353fd8b5851">SPI_enableCS</a>(<span class="keywordtype">int</span> spidev_fd);</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#a765c913618ea80e9ad453d8ab2120b60">SPI_disableCS</a>(<span class="keywordtype">int</span> spidev_fd);</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#ad8f59619ae9d1f2d97b0e0969bb612e1">SPI_enableLoopback</a>(<span class="keywordtype">int</span> spidev_fd);</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#a0208c430a384927f4a8f0eaf90fe9d41">SPI_disableLoopback</a>(<span class="keywordtype">int</span> spidev_fd);</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#af319540760d84fa649545616be122399">SPI_enable3Wire</a>(<span class="keywordtype">int</span> spidev_fd);</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#a271b02468019ecb7746ea404772b2e6c">SPI_disable3Wire</a>(<span class="keywordtype">int</span> spidev_fd);</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#a74608d149677e6ac4918457dd426ab51">SPI_setMode</a>(<span class="keywordtype">int</span> spidev_fd, uint8_t mode);</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;<span class="keywordtype">int</span> <a class="code" href="spidriver_8h.html#a67d1d21089f0347199f627298cb18f69">SPI_getMode</a>(<span class="keywordtype">int</span> spidev_fd);</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;<span class="preprocessor">#endif // _SPI_DRIVER_H_</span></div>
 <div class="ttc" id="spidriver_8h_html_a7ff9166531a3a53a0204f4814af37984"><div class="ttname"><a href="spidriver_8h.html#a7ff9166531a3a53a0204f4814af37984">SPI_close</a></div><div class="ttdeci">void SPI_close(int spidev_fd)</div><div class="ttdoc">Closes the given spidev interface. </div></div>
 <div class="ttc" id="spidriver_8h_html_aecb40c484f3e3aeec9e496e26b75cd7f"><div class="ttname"><a href="spidriver_8h.html#aecb40c484f3e3aeec9e496e26b75cd7f">SPI_read</a></div><div class="ttdeci">int SPI_read(int spidev_fd, void *rx_buffer, int n_words)</div><div class="ttdoc">Reads from the given spidev interface. </div></div>
-<div class="ttc" id="spidriver_8h_html_a31bd35a1aecbf364e888c14b090ff3d4a183d076e845f5ea5d99465cd6aff505f"><div class="ttname"><a href="spidriver_8h.html#a31bd35a1aecbf364e888c14b090ff3d4a183d076e845f5ea5d99465cd6aff505f">SPI_LSBFIRST</a></div><div class="ttdoc">Least significant bit first. </div><div class="ttdef"><b>Definition:</b> <a href="spidriver_8h_source.html#l00109">spidriver.h:109</a></div></div>
+<div class="ttc" id="spidriver_8h_html_a31bd35a1aecbf364e888c14b090ff3d4a183d076e845f5ea5d99465cd6aff505f"><div class="ttname"><a href="spidriver_8h.html#a31bd35a1aecbf364e888c14b090ff3d4a183d076e845f5ea5d99465cd6aff505f">SPI_LSBFIRST</a></div><div class="ttdoc">Least significant bit first. </div><div class="ttdef"><b>Definition:</b> <a href="spidriver_8h_source.html#l00112">spidriver.h:112</a></div></div>
 <div class="ttc" id="spidriver_8h_html_af60601f12d58cb00180f16c245191dda"><div class="ttname"><a href="spidriver_8h.html#af60601f12d58cb00180f16c245191dda">SPI_setMaxFrequency</a></div><div class="ttdeci">int SPI_setMaxFrequency(int spidev_fd, uint32_t frequency)</div><div class="ttdoc">Sets the maximum clock frequency for the given spidev interface. </div></div>
 <div class="ttc" id="spidriver_8h_html_a67d1d21089f0347199f627298cb18f69"><div class="ttname"><a href="spidriver_8h.html#a67d1d21089f0347199f627298cb18f69">SPI_getMode</a></div><div class="ttdeci">int SPI_getMode(int spidev_fd)</div><div class="ttdoc">Gets and returns the full SPI mode byte for the given spidev interface. </div></div>
 <div class="ttc" id="spidriver_8h_html_ab8bffff4f109622f5425c353fd8b5851"><div class="ttname"><a href="spidriver_8h.html#ab8bffff4f109622f5425c353fd8b5851">SPI_enableCS</a></div><div class="ttdeci">int SPI_enableCS(int spidev_fd)</div><div class="ttdoc">Enables the given spidev interface&#39;s cs output. </div></div>
@@ -178,7 +178,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="spidriver_8h_html_ad65e7362ab689c4de7d31f9ab19777fe"><div class="ttname"><a href="spidriver_8h.html#ad65e7362ab689c4de7d31f9ab19777fe">SPI_setBitsPerWord</a></div><div class="ttdeci">int SPI_setBitsPerWord(int spidev_fd, uint8_t bits_per_word)</div><div class="ttdoc">Sets the number of bits per word for the given spidev interface. </div></div>
 <div class="ttc" id="spidriver_8h_html_a74608d149677e6ac4918457dd426ab51"><div class="ttname"><a href="spidriver_8h.html#a74608d149677e6ac4918457dd426ab51">SPI_setMode</a></div><div class="ttdeci">int SPI_setMode(int spidev_fd, uint8_t mode)</div><div class="ttdoc">Sets the full SPI mode byte for the given spidev interface. </div></div>
 <div class="ttc" id="spidriver_8h_html_acf0c4b6dd9a5f1bf164d336858ef9d63"><div class="ttname"><a href="spidriver_8h.html#acf0c4b6dd9a5f1bf164d336858ef9d63">SPI_getClockMode</a></div><div class="ttdeci">int SPI_getClockMode(int spidev_fd)</div><div class="ttdoc">Gets the clock mode for the given spidev interface. </div></div>
-<div class="ttc" id="spidriver_8h_html_a31bd35a1aecbf364e888c14b090ff3d4"><div class="ttname"><a href="spidriver_8h.html#a31bd35a1aecbf364e888c14b090ff3d4">SPI_bit_order</a></div><div class="ttdeci">SPI_bit_order</div><div class="ttdef"><b>Definition:</b> <a href="spidriver_8h_source.html#l00107">spidriver.h:107</a></div></div>
+<div class="ttc" id="spidriver_8h_html_a31bd35a1aecbf364e888c14b090ff3d4"><div class="ttname"><a href="spidriver_8h.html#a31bd35a1aecbf364e888c14b090ff3d4">SPI_bit_order</a></div><div class="ttdeci">SPI_bit_order</div><div class="ttdef"><b>Definition:</b> <a href="spidriver_8h_source.html#l00110">spidriver.h:110</a></div></div>
 <div class="ttc" id="spidriver_8h_html_ad8f59619ae9d1f2d97b0e0969bb612e1"><div class="ttname"><a href="spidriver_8h.html#ad8f59619ae9d1f2d97b0e0969bb612e1">SPI_enableLoopback</a></div><div class="ttdeci">int SPI_enableLoopback(int spidev_fd)</div><div class="ttdoc">Puts the given spidev interface in loopback mode. </div></div>
 <div class="ttc" id="spidriver_8h_html_af608773d4a769343f1967258b273971b"><div class="ttname"><a href="spidriver_8h.html#af608773d4a769343f1967258b273971b">SPI_open</a></div><div class="ttdeci">int SPI_open(uint8_t bus, uint8_t cs)</div><div class="ttdoc">Opens the /dev/spidev[bus].[cs] interface. </div></div>
 <div class="ttc" id="spidriver_8h_html_a33876b63ecaab993dbdca380bdaa2dab"><div class="ttname"><a href="spidriver_8h.html#a33876b63ecaab993dbdca380bdaa2dab">SPI_getMaxFrequency</a></div><div class="ttdeci">int SPI_getMaxFrequency(int spidev_fd)</div><div class="ttdoc">Gets the maximum clock frequency for the given spidev interface. </div></div>
@@ -191,12 +191,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="spidriver_8h_html_ab2adb8ed5190c8c0cc112fceea89098d"><div class="ttname"><a href="spidriver_8h.html#ab2adb8ed5190c8c0cc112fceea89098d">SPI_setBitOrder</a></div><div class="ttdeci">int SPI_setBitOrder(int spidev_fd, SPI_bit_order bit_order)</div><div class="ttdoc">Sets the bit order of the given spidev interface. </div></div>
 <div class="ttc" id="spidriver_8h_html_ad02fbb762c5783f45db896b133cdf9ff"><div class="ttname"><a href="spidriver_8h.html#ad02fbb762c5783f45db896b133cdf9ff">SPI_setClockMode</a></div><div class="ttdeci">int SPI_setClockMode(int spidev_fd, uint8_t clock_mode)</div><div class="ttdoc">Sets the clock mode for the given spidev interface. </div></div>
 <div class="ttc" id="spidriver_8h_html_a665527500ba4a01476e2a0b5cda44d41"><div class="ttname"><a href="spidriver_8h.html#a665527500ba4a01476e2a0b5cda44d41">SPI_write</a></div><div class="ttdeci">int SPI_write(int spidev_fd, void *tx_buffer, int n_words)</div><div class="ttdoc">Writes to the given spidev interface. </div></div>
-<div class="ttc" id="spidriver_8h_html_a31bd35a1aecbf364e888c14b090ff3d4a3fa35f661bf7fbb96c05ff70827553be"><div class="ttname"><a href="spidriver_8h.html#a31bd35a1aecbf364e888c14b090ff3d4a3fa35f661bf7fbb96c05ff70827553be">SPI_MSBFIRST</a></div><div class="ttdoc">Most significant bit first. </div><div class="ttdef"><b>Definition:</b> <a href="spidriver_8h_source.html#l00108">spidriver.h:108</a></div></div>
+<div class="ttc" id="spidriver_8h_html_a31bd35a1aecbf364e888c14b090ff3d4a3fa35f661bf7fbb96c05ff70827553be"><div class="ttname"><a href="spidriver_8h.html#a31bd35a1aecbf364e888c14b090ff3d4a3fa35f661bf7fbb96c05ff70827553be">SPI_MSBFIRST</a></div><div class="ttdoc">Most significant bit first. </div><div class="ttdef"><b>Definition:</b> <a href="spidriver_8h_source.html#l00111">spidriver.h:111</a></div></div>
 <div class="ttc" id="spidriver_8h_html_a0cb07d57c9422bacb7229e00546ad426"><div class="ttname"><a href="spidriver_8h.html#a0cb07d57c9422bacb7229e00546ad426">SPI_setCSActiveHigh</a></div><div class="ttdeci">int SPI_setCSActiveHigh(int spidev_fd)</div><div class="ttdoc">Sets the given spidev interface&#39;s cs signal to be active high. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 23 2015 17:19:59 for Serbus by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Oct 24 2015 14:36:53 for Serbus by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

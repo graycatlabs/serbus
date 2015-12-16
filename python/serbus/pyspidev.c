@@ -214,7 +214,7 @@ PyDoc_STRVAR(SPIDev_write__doc__,
   "Writes the given list of words to the SPI interface using the given chip\n"
   "select.\n"
   "\n"
-  ":note: Will only write up to a maximum of 4096 byts.\n"
+  ":note: Will only write up to a maximum of 4096 bytes.\n"
   );
 static PyObject *SPIDev_write(SPIDev *self, PyObject *args, PyObject *kwds) {
   uint8_t cs;
@@ -272,10 +272,13 @@ PyDoc_STRVAR(SPIDev_transfer__doc__,
   ":param words: The words to be written\n"
   ":type words: list\n"
   "\n" 
+  "\n"
+  ":returns: The words read as a list of ints, the same length as `words`.\n"
+  "\n"
   "Writes the given list of words to the SPI interface using the given chip\n"
   "select while simultaneously reading bytes.\n"
   "\n"
-  ":note: Will only write/read up to a maximum of 4096 byts.\n"
+  ":note: Will only write/read up to a maximum of 4096 bytes.\n"
   );
 static PyObject *SPIDev_transfer(SPIDev *self, PyObject *args, PyObject *kwds) {
   uint8_t cs;

@@ -14,6 +14,8 @@ only tested it extensively on the BeagleBone Black, so use it at your own risk!
 * C API documentation: https://graycat.io/docs/serbus/
 * Python API documentation: https://graycat.io/docs/serbus/python/
 
+[![Build Status](https://ci.graycat.io/buildStatus/icon?job=serbus)](https://ci.graycat.io/job/serbus/)
+
 ## Contributing
 
 Have something to contribute? Great! This project follows the Contributor 

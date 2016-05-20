@@ -101,6 +101,53 @@ int SPI_write(int spidev_fd, void *tx_buffer, int n_words) {
   return (n_bytes<<3) / bits_per_word;
 }
 
+int SPI_transaction(int spidev_fd, void *tx_buffer, int n_tx_words, void *rx_buffer, int n_rx_words) {
+  uint8_t bits_per_word;
+  uint32_t n_tx_bytes, n_rx_bytes;
+  struct spi_ioc_transfer transfers[2];
+  int n_transfers;
+  bits_per_word = SPI_getBitsPerWord(spidev_fd);
+  if (bits_per_word < 0) return bits_per_word;
+  // Round up to the next biggest number of bytes:
+  n_tx_bytes = (uint32_t) (((float) (bits_per_word * n_tx_words)) / 8.0 + 0.5);
+  n_rx_bytes = (uint32_t) (((float) (bits_per_word * n_rx_words)) / 8.0 + 0.5);
+  if (!n_rx_bytes && !n_tx_bytes) return 0;
+  if (n_rx_bytes > MAX_TRANSFER_SIZE) n_rx_bytes = MAX_TRANSFER_SIZE;
+  if (n_tx_bytes > MAX_TRANSFER_SIZE) n_tx_bytes = MAX_TRANSFER_SIZE;
+
+  n_transfers = 0;
+  if (n_tx_bytes) {
+      memset((void *) &transfers[n_transfers], 0, sizeof(struct spi_ioc_transfer));
+
+      transfers[n_transfers].tx_buf = (uintptr_t) tx_buffer;
+      transfers[n_transfers].rx_buf = 0;
+      transfers[n_transfers].len = n_tx_bytes;
+      transfers[n_transfers].speed_hz = 0;
+      transfers[n_transfers].delay_usecs = 0;
+      transfers[n_transfers].bits_per_word = bits_per_word;
+      transfers[n_transfers].cs_change = 0;
+
+      ++n_transfers;
+  }
+
+  if (n_rx_bytes) {
+      memset((void *) &transfers[n_transfers], 0, sizeof(struct spi_ioc_transfer));
+
+      transfers[n_transfers].tx_buf = 0;
+      transfers[n_transfers].rx_buf = (uintptr_t) rx_buffer;
+      transfers[n_transfers].len = n_rx_bytes + 1;
+      transfers[n_transfers].speed_hz = 0;
+      transfers[n_transfers].delay_usecs = 0;
+      transfers[n_transfers].bits_per_word = bits_per_word;
+      transfers[n_transfers].cs_change = 0;
+
+      ++n_transfers;
+  }
+
+  if (ioctl(spidev_fd, SPI_IOC_MESSAGE(n_transfers), transfers) < 0) return -1;
+  return (n_rx_bytes << 3) / bits_per_word;
+}
+
 int SPI_transfer(int spidev_fd, void *tx_buffer, void *rx_buffer, int n_words) {
   uint8_t bits_per_word;
   uint32_t n_bytes;

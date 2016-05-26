@@ -87,6 +87,26 @@ int SPI_read(int spidev_fd, void *rx_buffer, int n_words);
 int SPI_write(int spidev_fd, void *tx_buffer, int n_words);
 
 /**
+ * @brief Writes and then reads to the given spidev interface keeping CS unchanged.
+ *
+ * Writes \p n_tx_words from \p tx_buffer to the given spidev interface and
+ * then reads \p n_rx_words from spidev interface and puts them into the
+ * \p rx_buffer
+ *
+ * @param spidev_fd spidev file descriptor
+ * @param tx_buffer pointer to an array containing the words to be transmitted
+ * @param n_tx_words the number of words to be transmitted from tx_buffer
+ * @param rx_buffer pointer to an array, already initialized to the required
+ *        size
+ * @param n_rx_words the number of words to read into tx_buffer
+ *
+ * @return Returns the number of bytes read, or -1 if unable to read or write
+ *         interface
+ */
+int SPI_transaction(int spidev_fd, void *tx_buffer, int n_tx_words, 
+                    void *rx_buffer, int n_rx_words);
+
+/**
  * @brief Writes to and reads from the given spidev interface simultaneously.
  *
  * Writes n_words from the given tx buffer to the given spidev interface, while 

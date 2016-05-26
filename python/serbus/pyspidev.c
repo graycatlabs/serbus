@@ -264,6 +264,103 @@ static PyObject *SPIDev_write(SPIDev *self, PyObject *args, PyObject *kwds) {
   return Py_BuildValue("i", n_words);
 }
 
+PyDoc_STRVAR(SPIDev_transaction__doc__,
+  "SPIDev.transaction(cs, tx_words, n_rx_words)\n"
+  "\n"
+  ":param cs: The chip select to use\n"
+  ":type cs: int\n"
+  ":param tx_words: The words to be written\n"
+  ":type tx_words: list\n"
+  ":param n_rx_words: The number of words to read\n"
+  ":type n_rx_words: int\n"
+  "\n"
+  "\n"
+  ":returns: A list of the words read as integers, in the order they were read.\n"
+  "\n"
+  "Writes the given list of words to the SPI interface using the given chip\n"
+  "select, then reads words from the SPI interface using the given chip select.\n"
+  "CS remains unchanged.\n"
+  "\n"
+  ":note: Will only write/read up to a maximum of 4096 bytes.\n"
+  );
+static PyObject *SPIDev_transaction(SPIDev *self, PyObject *args, PyObject *kwds) {
+  uint8_t cs;
+  uint32_t n_tx_bytes, n_rx_bytes, n_tx_words, n_rx_words, i, word;
+  PyObject *txdata, *rxdata, *word_obj;
+  void *txbuf, *rxbuf;
+
+  cs = 0;
+  if(!PyArg_ParseTuple(args, "bO!b", &cs, &PyList_Type, &txdata, &n_rx_words)) {
+    return NULL;
+  }
+
+  if (SPIDev_activateCS(self, cs) < 0) return NULL;
+
+  n_tx_words = PyList_Size(txdata);
+  n_tx_bytes = (uint32_t) (((float) (self->bits_per_word * n_tx_words)) / 8.0 + 0.5);
+  n_rx_bytes = (uint32_t) (((float) (self->bits_per_word * n_rx_words)) / 8.0 + 0.5);
+  txbuf = malloc(n_tx_bytes);
+  rxbuf = malloc(n_rx_bytes);
+
+  for (i=0; i<n_tx_words; i++) {
+    word_obj = PyList_GetItem(txdata, i);
+    if (!PyInt_Check(word_obj)) {
+      PyErr_SetString(PyExc_ValueError,
+        "data list to transmit can only contain integers");
+      free(rxbuf);
+      free(txbuf);
+      return NULL;
+    }
+    word = PyInt_AsLong(word_obj);
+    if (word < 0) {
+      if (PyErr_Occurred() != NULL) {
+          free(rxbuf);
+          free(txbuf);
+          return NULL;
+      }
+      word = 0;
+    }
+    switch(self->bytes_per_word) {
+    case 1:
+      ((uint8_t*)txbuf)[i] = (uint8_t) word;
+      break;
+    case 2:
+      ((uint16_t*)txbuf)[i] = (uint16_t) word;
+      break;
+    case 4:
+      ((uint32_t*)txbuf)[i] = (uint32_t) word;
+      break;
+    default:
+      break;
+    }
+  }
+  n_rx_words = SPI_transaction(self->spidev_fd[cs], txbuf, n_tx_words, rxbuf, 
+                               n_rx_words);
+  rxdata = PyList_New(0);
+  for (i=0; i<n_rx_words; i++) {
+    switch(self->bytes_per_word) {
+    case 1:
+      word = ((uint8_t*)rxbuf)[i];
+      break;
+    case 2:
+      word = ((uint16_t*)rxbuf)[i];
+      break;
+    case 4:
+      word = ((uint32_t*)rxbuf)[i];
+      break;
+    default:
+      word = 0;
+      break;
+    }
+    word_obj = PyInt_FromLong(word);
+    PyList_Append(rxdata, word_obj);
+    Py_DECREF(word_obj);
+  }
+  free(txbuf);
+  free(rxbuf);
+  return rxdata;
+}
+
 PyDoc_STRVAR(SPIDev_transfer__doc__,
   "SPIDev.transfer(cs, words)\n"
   "\n"
@@ -777,6 +874,8 @@ static PyMethodDef SPIDev_methods[] = {
     SPIDev_read__doc__},
   {"write", (PyCFunction)SPIDev_write, METH_VARARGS,
     SPIDev_write__doc__},
+  {"transaction", (PyCFunction)SPIDev_transaction, METH_VARARGS,
+    SPIDev_transaction__doc__},
   {"transfer", (PyCFunction)SPIDev_transfer, METH_VARARGS,
     SPIDev_transfer__doc__},
 

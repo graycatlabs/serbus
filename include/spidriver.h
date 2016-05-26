@@ -103,7 +103,8 @@ int SPI_write(int spidev_fd, void *tx_buffer, int n_words);
  * @return Returns the number of bytes read, or -1 if unable to read or write
  *         interface
  */
-int SPI_transaction(int spidev_fd, void *tx_buffer, int n_tx_words, void *rx_buffer, int n_rx_words);
+int SPI_transaction(int spidev_fd, void *tx_buffer, int n_tx_words, 
+                    void *rx_buffer, int n_rx_words);
 
 /**
  * @brief Writes to and reads from the given spidev interface simultaneously.

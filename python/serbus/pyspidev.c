@@ -334,7 +334,8 @@ static PyObject *SPIDev_transaction(SPIDev *self, PyObject *args, PyObject *kwds
       break;
     }
   }
-  n_rx_words = SPI_transaction(self->spidev_fd[cs], txbuf, n_tx_words, rxbuf, n_rx_words);
+  n_rx_words = SPI_transaction(self->spidev_fd[cs], txbuf, n_tx_words, rxbuf, 
+                               n_rx_words);
   rxdata = PyList_New(0);
   for (i=0; i<n_rx_words; i++) {
     switch(self->bytes_per_word) {

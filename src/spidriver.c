@@ -101,7 +101,8 @@ int SPI_write(int spidev_fd, void *tx_buffer, int n_words) {
   return (n_bytes<<3) / bits_per_word;
 }
 
-int SPI_transaction(int spidev_fd, void *tx_buffer, int n_tx_words, void *rx_buffer, int n_rx_words) {
+int SPI_transaction(int spidev_fd, void *tx_buffer, int n_tx_words, 
+                    void *rx_buffer, int n_rx_words) {
   uint8_t bits_per_word;
   uint32_t n_tx_bytes, n_rx_bytes;
   struct spi_ioc_transfer transfers[2];
@@ -117,7 +118,8 @@ int SPI_transaction(int spidev_fd, void *tx_buffer, int n_tx_words, void *rx_buf
 
   n_transfers = 0;
   if (n_tx_bytes) {
-      memset((void *) &transfers[n_transfers], 0, sizeof(struct spi_ioc_transfer));
+      memset((void *) &transfers[n_transfers], 0, 
+             sizeof(struct spi_ioc_transfer));
 
       transfers[n_transfers].tx_buf = (uintptr_t) tx_buffer;
       transfers[n_transfers].rx_buf = 0;
@@ -131,7 +133,8 @@ int SPI_transaction(int spidev_fd, void *tx_buffer, int n_tx_words, void *rx_buf
   }
 
   if (n_rx_bytes) {
-      memset((void *) &transfers[n_transfers], 0, sizeof(struct spi_ioc_transfer));
+      memset((void *) &transfers[n_transfers], 0, 
+             sizeof(struct spi_ioc_transfer));
 
       transfers[n_transfers].tx_buf = 0;
       transfers[n_transfers].rx_buf = (uintptr_t) rx_buffer;

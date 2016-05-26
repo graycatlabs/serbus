@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['serbus',['Serbus',['../index.html',1,'']]],
   ['spi_5fad7390_2ec',['spi_ad7390.c',['../spi__ad7390_8c.html',1,'']]],
   ['spi_5fbit_5forder',['SPI_bit_order',['../spidriver_8h.html#a31bd35a1aecbf364e888c14b090ff3d4',1,'spidriver.h']]],
   ['spi_5fclose',['SPI_close',['../spidriver_8h.html#a7ff9166531a3a53a0204f4814af37984',1,'spidriver.h']]],
@@ -24,6 +25,7 @@ var searchData=
   ['spi_5fsetcsactivelow',['SPI_setCSActiveLow',['../spidriver_8h.html#ab7d5d25b529b1c937649a8ef5bb45218',1,'spidriver.h']]],
   ['spi_5fsetmaxfrequency',['SPI_setMaxFrequency',['../spidriver_8h.html#af60601f12d58cb00180f16c245191dda',1,'spidriver.h']]],
   ['spi_5fsetmode',['SPI_setMode',['../spidriver_8h.html#a74608d149677e6ac4918457dd426ab51',1,'spidriver.h']]],
+  ['spi_5ftransaction',['SPI_transaction',['../spidriver_8h.html#aa6d3caa61bf2ce1cda0d4c92e45f4d16',1,'spidriver.h']]],
   ['spi_5ftransfer',['SPI_transfer',['../spidriver_8h.html#a597d2232d2925b4e436a7c23eae4d3d3',1,'spidriver.h']]],
   ['spi_5fwrite',['SPI_write',['../spidriver_8h.html#a665527500ba4a01476e2a0b5cda44d41',1,'spidriver.h']]],
   ['spidriver_2eh',['spidriver.h',['../spidriver_8h.html',1,'']]],

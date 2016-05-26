@@ -5,7 +5,7 @@ var indexSectionsWithContent =
   2: "agis",
   3: "s",
   4: "s",
-  5: "c"
+  5: "cs"
 };
 
 var indexSectionNames =
